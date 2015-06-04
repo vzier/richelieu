@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel='stylesheet' type="text/css" href="vendor/bootstrap-3.0.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/nvd3.css" />
+    <link rel="stylesheet" type="text/css" href="styles/main.css" />
+    <link href="styles/font-awesome.min.css" rel="stylesheet">
+    <title>richelieu vizier</title>
+  </head>
+  <body ng-controller="weeklyCtrl">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1><i class="fa fa-user" style="font-size: 26px"></i> richelieu vizier
+            <span class="right reset">
+              <span class="muted">{{clock | date: 'mediumDate'}}</span>
+              <br />
+              <span class="red">{{clock | date: 'shortTime'}}</span>
+              <br /><br />
+              <textarea class="inputarea" placeholder="Paste qs access data here (daily aggregation)" ng-keyup="updateQS(qsData)" ng-model="qsData"></textarea><br>
+              <small>
+                <a href="https://github.com/vzier/richelieu">instructions</a> - <a ng-click="clearQS()" href="#">clear data</a>
+                <br /><br />
+                code: <a href="https://github.com/vzier/richelieu"><i class="fa fa-github"></i></a><br>
+
+                my:
+                <a href="mailto:frxchen@gmail.com"><i class="fa fa-envelope-o"></i></a> -
+                <a href="https://twitter.com/frankc"><i class="fa fa-twitter"></i></a>
+              </small>
+
+            </span>
+          </h1>
+          This is your snapshot of how you've been doing this month with a periscope on this week…
+        </div>
+      </div>
+      <div class="row voffset5">
+        <div class="col-md-1 voffset6">
+          <!-- placeholder -->
+        </div>
+        <div class="col-md-4">
+          Month
+        </div>
+        <div class="col-md-3">
+          Week
+        </div>
+        <div class="col-md-3">
+          Avg &#916;
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 voffset6">
+          Steps
+        </div>
+        <div class="col-md-4">
+          <nvd3-sparkline-chart data="monthly[1].values" id="steps_monthly" x="xFunction()" y="yFunction()" width="250" height="150" showvalue="false" xtickformat="xAxisTickFormat()">
+            <svg></svg>
+          </nvd3-sparkline-chart>
+        </div>
+        <div class="col-md-3">
+           <nvd3-multi-bar-chart
+            data="weeklyDiff[1]"
+            id="steps_weekly_diff"
+            height="150"
+            showXAxis="false"
+            showYAxis="false"
+            tooltips="true">
+            <svg></svg>
+          </nvd3-multi-bar-chart>
+        </div>
+        <div class="col-md-2 muted" ng-bind-html="createPercentageString(weeklyDiff[1])">
+        </div>
+        <div class="col-md-1 muted"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 voffset6">
+          Weight
+        </div>
+        <div class="col-md-4">
+          <nvd3-sparkline-chart data="normalized_month[0].values" id="weight_monthly" x="xFunction()" y="yFunction()" width="250" height="150" showvalue="false" xtickformat="xAxisTickFormat()">
+            <svg></svg>
+          </nvd3-sparkline-chart>
+        </div>
+        <div class="col-md-3">
+          <nvd3-multi-bar-chart
+            data="weeklyDiff[0]"
+            id="weight_weekly_diff"
+            height="150"
+            showXAxis="false"
+            showYAxis="false">
+            <svg></svg>
+          </nvd3-multi-bar-chart>
+        </div>
+        <div class="col-md-2 muted" ng-bind-html="createPercentageString(weeklyDiff[0])" xtickformat="xAxisTickFormat()">
+        </div>
+        <div class="col-md-1 muted"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 voffset6">
+          Protein
+        </div>
+        <div class="col-md-4">
+          <nvd3-sparkline-chart data="monthly[2].values" id="protein_monthly" x="xFunction()" y="yFunction()" width="250" height="150" showvalue="false" xtickformat="xAxisTickFormat()">
+            <svg></svg>
+          </nvd3-sparkline-chart>
+        </div>
+        <div class="col-md-3">
+          <nvd3-multi-bar-chart
+            data="weeklyDiff[2]"
+            id="protein_weekly_diff"
+            height="150"
+            showXAxis="false"
+            showYAxis="false">
+            <svg></svg>
+          </nvd3-multi-bar-chart>
+        </div>
+        <div class="col-md-2 muted" ng-bind-html="createPercentageString(weeklyDiff[2])" xtickformat="xAxisTickFormat()">
+        </div>
+        <div class="col-md-1 muted"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 voffset6">
+          Carbs
+        </div>
+        <div class="col-md-4">
+          <nvd3-sparkline-chart data="monthly[3].values" id="carbs_monthly" x="xFunction()" y="yFunction()" width="250" height="150" showvalue="false" xtickformat="xAxisTickFormat()">
+            <svg></svg>
+          </nvd3-sparkline-chart>
+        </div>
+        <div class="col-md-3">
+          <nvd3-multi-bar-chart
+            data="weeklyDiff[3]"
+            id="carbs_weekly_diff"
+            height="150"
+            showXAxis="false"
+            showYAxis="false">
+            <svg></svg>
+          </nvd3-multi-bar-chart>
+        </div>
+        <div class="col-md-2 muted" ng-bind-html="createPercentageString(weeklyDiff[3])">
+        </div>
+        <div class="col-md-1 muted"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1 voffset6">
+          Caffeine
+        </div>
+        <div class="col-md-4">
+          <nvd3-sparkline-chart data="monthly[4].values" id="exampleasdfaId123232" x="xFunction()" y="yFunction()" width="250" height="150" showvalue="false" xtickformat="xAxisTickFormat()">
+            <svg></svg>
+          </nvd3-sparkline-chart>
+        </div>
+        <div class="col-md-3">
+          <nvd3-multi-bar-chart
+            data="weeklyDiff[4]"
+            id="caff_weekly_diff"
+            height="150"
+            showXAxis="false"
+            showYAxis="false">
+            <svg></svg>
+          </nvd3-multi-bar-chart>
+        </div>
+        <div class="col-md-2 muted" ng-bind-html="createPercentageString(weeklyDiff[4])">
+        </div>
+        <div class="col-md-1 muted"></div>
+      </div>
+
+    </div>
+    <script src="bower_components/requirejs/require.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>

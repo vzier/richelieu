@@ -1,0 +1,38 @@
+{
+  "name": "vizier-richelieu",
+  "version": "0.0.1",
+  "homepage": "http://frankc.net",
+  "authors": [
+    "Frak Chen <frxchen@gmail.com"
+  ],
+  "description": "A seed project for using angularjs, requirejs and d3 in combination",
+  "main": "scripts/app.js",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "requirejs",
+    "d3"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.2",
+    "d3": "~3.5.5",
+    "requirejs-domready": "latest",
+    "requirejs": "latest",
+    "angular-route": "1.2",
+    "nvd3": "~1.7.1",
+    "angularjs-nvd3-directives": "~0.0.7"
+  },
+  "resolutions": {
+    "angular": "~1.3.13",
+    "d3": "~3.5.5",
+    "nvd3": "~1.7.1"
+  }
+}
